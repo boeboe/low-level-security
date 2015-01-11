@@ -1,0 +1,20 @@
+Data only attack
+================
+
+This example shows how to do a buffer overflow, hereby manipulating other variables and changing the execution flow of the program.
+
+On modern compilers, you need to disable several counter measures in order to demonstrate this phenomena.
+
+ 1. Disable ASLR (adress space layout randomization):
+
+	sudo echo 0 > /proc/sys/kernel/randomize_va_space
+
+ 2. Disable canaries:
+
+	gcc -fno-stack-protector 
+
+ 3. Disable non-executable stack markings:
+
+	gcc -z execstack 
+
+
