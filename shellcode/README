@@ -1,0 +1,47 @@
+Steps to create an executable shellcode
+=======================================
+
+1. Create or find assembly file (asm extention).
+
+	- exitcall.asm : containts a gracefull exit(0).
+	- youwin.asm : print "you win!\r\n" to console.
+	
+	Make sure you use the correct opcodes and registers depending 
+	on your architecture (elf64 aka x86_64 in this case)
+	
+2. Create object file and link.
+
+	# nasm -f elf64 -o exitcall.o exitcall.asm
+	# ld -o exitcall exitcall.o
+	
+	# nasm -f elf64 -o youwin.o youwin.asm
+	# ld -o youwin youwin.o
+
+	Verify if you can execute the binary files exitcall and youwin.
+	
+3. Extract .text and convert to char[].
+
+	# objcopy -I elf64-little -j .text -O binary exitcall exitcall.text
+	# xxd -i exitcall.text
+	
+		unsigned char exitcall_text[] = {
+		  0x31, 0xdb, 0xb0, 0x01, 0xcd, 0x80
+		};
+		unsigned int exitcall_text_len = 6;
+		
+	# objcopy -I elf64-little -j .text -O binary youwin youwin.text
+	# xxd -i youwin.text 
+
+		unsigned char youwin_text[] = {
+		  0xeb, 0x19, 0x31, 0xc0, 0x31, 0xdb, 0x31, 0xd2, 0x31, 0xc9, 0xb0, 0x04,
+		  0xb3, 0x01, 0x59, 0xb2, 0x0a, 0xcd, 0x80, 0x31, 0xc0, 0xb0, 0x01, 0x31,
+		  0xdb, 0xcd, 0x80, 0xe8, 0xe2, 0xff, 0xff, 0xff, 0x79, 0x6f, 0x75, 0x20,
+		  0x77, 0x69, 0x6e, 0x21, 0x0d, 0x0a
+		};
+		unsigned int youwin_text_len = 42;
+
+4. Test shellcode char[] with shellprogram.c (edit, build & run).
+
+	# make clean default
+	# ./shellprogram
+
