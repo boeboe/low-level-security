@@ -17,4 +17,13 @@ On modern compilers, you need to disable several counter measures in order to de
 
 	gcc -z execstack 
 
+    execstack --set-execstack <executable>
+
+
+
+SOLUTION:
+
+	buf: ffffdcf0 cookie: ffffdcfc
+	FFFFFFFFFFFFDCBA
+	you win!
 

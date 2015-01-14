@@ -1,4 +1,4 @@
-TARGET = data-only
+TARGET = file-passwd
 LIBS = -lm
 CC = gcc
 CFLAGS = -g -w -ggdb -static -fno-stack-protector -z execstack

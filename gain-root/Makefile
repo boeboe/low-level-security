@@ -1,7 +1,7 @@
-TARGET = stack-overflow
+TARGET = gain-root
 LIBS = -lm
 CC = gcc
-CFLAGS = -g -w -ggdb -static -fno-stack-protector -z execstack -O0
+CFLAGS = -g -w -ggdb -static -fno-stack-protector -z execstack
 
 .PHONY: default all clean
 
