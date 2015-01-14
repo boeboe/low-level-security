@@ -1,10 +1,3 @@
-/*
-  StackOverrun.c
-  This program shows an example of how a stack-based 
-  buffer overrun can be used to execute arbitrary code.  Its 
-  objective is to find an input string that executes the function bar.
-*/
-
 #pragma check_stack(off)
 
 #include <string.h>
