@@ -1,3 +1,8 @@
+Data only attack
+================
+
+This example shows how to do a buffer overflow, hereby manipulating other variables and changing the execution flow of the program.
+
 On modern compilers, you need to disable several counter measures in order to demonstrate this phenomena.
 
 1. Disable ASLR (adress space layout randomization):
@@ -13,3 +18,12 @@ On modern compilers, you need to disable several counter measures in order to de
 	gcc -z execstack 
 
     execstack --set-execstack <executable>
+
+
+
+SOLUTION:
+
+	buf: ffffdcf0 cookie: ffffdcfc
+	FFFFFFFFFFFFDCBA
+	you win!
+

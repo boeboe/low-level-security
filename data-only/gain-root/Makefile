@@ -1,7 +1,6 @@
-TARGET = shellprogram
+TARGET = gain-root
 LIBS = -lm
 CC = gcc
-#CFLAGS = -g -w -fno-stack-protector -z execstack
 CFLAGS = -g -w -ggdb -static -fno-stack-protector -z execstack
 
 .PHONY: default all clean
