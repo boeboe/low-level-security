@@ -12,6 +12,6 @@ my $command = "./cookie-win ";
 
 my $exp = Expect->spawn($command) or die "Cannot spawn cookie-win command \n";
 
-$exp->expect($timeout, ["please provice input"]); 
+$exp->expect($timeout, ["buf"]); 
 $exp->send($input);
 $exp->soft_close();

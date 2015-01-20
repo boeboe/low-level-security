@@ -1,9 +1,8 @@
 TARGET = strcpy
 LIBS = -lm
 CC = gcc
-CFLAGS = -g -O0 -w -fno-stack-protector -z execstack -D_FORTIFY_SOURCE=0
-#CFLAGS = -g -O0 -w -ggdb -fno-stack-protector -z execstack
-LDFLAGS = -static
+CFLAGS = -g -O0 -w -fno-stack-protector -D_FORTIFY_SOURCE=0
+LDFLAGS = -static -z execstack
 
 
 .PHONY: default all clean

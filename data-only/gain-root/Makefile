@@ -1,7 +1,9 @@
 TARGET = gain-root
 LIBS = -lm
 CC = gcc
-CFLAGS = -g -w -ggdb -static -fno-stack-protector -z execstack
+CFLAGS = -g -O0 -w -fno-stack-protector -D_FORTIFY_SOURCE=0
+LDFLAGS = -static -z execstack
+
 
 .PHONY: default all clean
 
@@ -17,7 +19,7 @@ HEADERS = $(wildcard *.h)
 .PRECIOUS: $(TARGET) $(OBJECTS)
 
 $(TARGET): $(OBJECTS)
-	$(CC) $(OBJECTS) -Wall $(LIBS) -o $@
+	$(CC) $(LDFLAGS) $(OBJECTS) -Wall $(LIBS) -o $@
 
 run: $(TARGET)
 	@echo Going to run $(TARGET) ...
@@ -26,4 +28,3 @@ run: $(TARGET)
 clean:
 	rm -f *.o
 	rm -f $(TARGET)
-

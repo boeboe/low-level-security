@@ -1,6 +1,5 @@
-/* strcpy.c                               *
- * specially crafted to feed your brain by gera */
- 
+#pragma check_stack(off)
+
 #include <string.h>
  
 int main(int argc, char *argv[]) {
