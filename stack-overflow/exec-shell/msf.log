@@ -1,0 +1,49 @@
+
+# msfconsole
+
+msf > use payload/linux/x64/exec
+
+msf payload(exec) > generate -o CMD="echo you win!" -t perl -b '\x00'
+msf payload(exec) > generate -o CMD="echo you win!" -t python -b '\x00' 
+msf payload(exec) > generate -o CMD="echo you win!" -t c -b '\x00' 
+
+msf > use payload/linux/x
+
+    payload/linux/x64/exec
+    payload/linux/x64/shell/bind_tcp
+    payload/linux/x64/shell/reverse_tcp
+    payload/linux/x64/shell_bind_tcp
+    payload/linux/x64/shell_bind_tcp_random_port
+    payload/linux/x64/shell_find_port
+    payload/linux/x64/shell_reverse_tcp
+    payload/linux/x86/adduser
+    payload/linux/x86/chmod
+    payload/linux/x86/exec
+    payload/linux/x86/meterpreter/bind_ipv6_tcp
+    payload/linux/x86/meterpreter/bind_nonx_tcp
+    payload/linux/x86/meterpreter/bind_tcp
+    payload/linux/x86/meterpreter/find_tag
+    payload/linux/x86/meterpreter/reverse_ipv6_tcp
+    payload/linux/x86/meterpreter/reverse_nonx_tcp
+    payload/linux/x86/meterpreter/reverse_tcp
+    payload/linux/x86/metsvc_bind_tcp
+    payload/linux/x86/metsvc_reverse_tcp
+    payload/linux/x86/read_file
+    payload/linux/x86/shell/bind_ipv6_tcp
+    payload/linux/x86/shell/bind_nonx_tcp
+    payload/linux/x86/shell/bind_tcp
+    payload/linux/x86/shell/find_tag
+    payload/linux/x86/shell/reverse_ipv6_tcp
+    payload/linux/x86/shell/reverse_nonx_tcp
+    payload/linux/x86/shell/reverse_tcp
+    payload/linux/x86/shell_bind_ipv6_tcp
+    payload/linux/x86/shell_bind_tcp
+    payload/linux/x86/shell_bind_tcp_random_port
+    payload/linux/x86/shell_find_port
+    payload/linux/x86/shell_find_tag
+    payload/linux/x86/shell_reverse_tcp
+    payload/linux/x86/shell_reverse_tcp2
+
+msf > quit
+
+#
